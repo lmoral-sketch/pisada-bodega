@@ -1,0 +1,4 @@
+# Simulación de colas. Es la librería que el enunciado exige.
+ciw==3.2.7
+# Gráficos de los resultados para la presentación.
+matplotlib==3.11.2
