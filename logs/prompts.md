@@ -59,3 +59,31 @@ no aprobadas**.
   - El modelo no representa ausentismo, errores de picking que obliguen a rehacer el pedido,
     ni quiebres de stock. Son simplificaciones declaradas.
 - **Propuestas no aprobadas:** ninguna.
+
+## 2026-11-25 | agente: Claude Code (claude-opus-5)
+
+- **Prompt:** «Sí, ármala» — la presentación, que es el entregable principal del Trabajo 2.
+- **Cambios:**
+  - `experimentos/g00_graficos.py`: cinco gráficos con la paleta UTEM, con el celeste de la
+    Facultad de Ingeniería predominante. Perfil de llegadas, curva de degradación,
+    utilización y bloqueo, comparación de escenarios y punto de equilibrio.
+  - `experimentos/g01_presentacion.py`: **genera** `docs/presentacion.html`, 15 láminas, en
+    vez de escribirlas a mano. Las cifras se leen de `resultados/*.json`, de modo que si un
+    experimento cambia la presentación queda al día volviendo a correr el script. Es la regla
+    4 de `AGENTS.md` aplicada al entregable: en el Trabajo 1 tres cifras quedaron desfasadas
+    por copiarlas entre documentos.
+  - Reparto: las quince láminas están asignadas a los cinco integrantes, con el nombre de
+    quien expone al pie de cada una, porque el enunciado exige que expongan todos.
+  - La presentación cubre los cuatro puntos que el enunciado enumera: el problema, las
+    decisiones de diseño, una lámina de evidencia de cumplimiento de los requerimientos, y la
+    justificación de supuestos y cálculos.
+- **Defectos conocidos:**
+  - La fuente Aptos no está instalada en el equipo donde se generaron los gráficos, así que
+    matplotlib usó la alternativa. El manual de identidad admite Montserrat como alternativa
+    y la presentación HTML sí la carga desde Google Fonts.
+  - La `ρ` del encabezado de la tabla se renderizaba como «P» por el `text-transform:
+    uppercase`. Corregido excluyendo esos encabezados de la transformación.
+  - No se ha incorporado la rúbrica: sigue sin estar disponible. La estructura de la
+    presentación sigue el orden en que el enunciado enumera los requisitos, no una
+    ponderación.
+- **Propuestas no aprobadas:** ninguna.
