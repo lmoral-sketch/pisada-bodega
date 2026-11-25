@@ -34,7 +34,9 @@ def cargar():
         e2 = json.load(f)
     with open(os.path.join(RES, "e03-mejoras.json"), encoding="utf-8") as f:
         e3 = json.load(f)
-    return e1, e2, e3
+    with open(os.path.join(RES, "e04-limite-mejorado.json"), encoding="utf-8") as f:
+        e4 = json.load(f)
+    return e1, e2, e3, e4
 
 
 def num(x, d=1):
@@ -88,6 +90,7 @@ CSS = """
   table { width:100%; border-collapse:collapse; font-size:1.35vw; }
   th { text-align:left; font-size:1vw; text-transform:uppercase; letter-spacing:.08em; }
   th .tal-cual { text-transform:none; font-size:1.15vw; }
+  th:not(:first-child) { text-align:right; }
   th:not(.x) { font-size:1vw; letter-spacing:.08em;
        color:var(--celeste-ing); padding-bottom:1.1vh; border-bottom:2px solid var(--celeste-ing); }
   td { padding:1.1vh 0; border-bottom:1px solid #e6e6e6; }
@@ -141,7 +144,7 @@ def lamina(n, total, etiqueta, quien, cuerpo, clase=""):
 
 
 def construir():
-    e1, e2, e3 = cargar()
+    e1, e2, e3, e4 = cargar()
     r = e1["resumen"]
     est = r["estaciones"]
     economia = e1["economia"]
@@ -159,7 +162,9 @@ def construir():
     equilibrio = d_costo / evitados
 
     L = []
-    T = 15
+    T = 17
+    import itertools
+    num_lamina = itertools.count(2)
 
     # 1 ── Portada
     L.append(f"""
@@ -181,7 +186,7 @@ def construir():
 </section>""")
 
     # 2 ── El problema
-    L.append(lamina(2, T, "El problema por resolver", "Catalina Araniz", f"""
+    L.append(lamina(next(num_lamina), T, "El problema por resolver", "Catalina Araniz", f"""
   <h2>Una bodega que procesa todo,<br>pero no alcanza a despachar a tiempo</h2>
   <p class="grande">Pisada prepara <strong>{p.PEDIDOS_DIA} pedidos al día</strong> con seis
      operarios en tres estaciones. No se pierden pedidos: todos salen. El problema es
@@ -198,7 +203,7 @@ def construir():
      <strong>dónde</strong> y <strong>cuándo</strong>.</p>"""))
 
     # 3 ── El sistema
-    L.append(lamina(3, T, "El sistema modelado", "Catalina Araniz", f"""
+    L.append(lamina(next(num_lamina), T, "El sistema modelado", "Catalina Araniz", f"""
   <h2>Tres estaciones en serie</h2>
   <div class="flujo">
     <div class="caja"><div class="t">Picking</div><div class="s">s = 3</div>
@@ -222,7 +227,7 @@ def construir():
   </ul>"""))
 
     # 4 ── Cumplimiento de requisitos
-    L.append(lamina(4, T, "Cumplimiento de los requerimientos", "Catalina Araniz", f"""
+    L.append(lamina(next(num_lamina), T, "Cumplimiento de los requerimientos", "Catalina Araniz", f"""
   <h2>Lo que el enunciado exige,<br>y dónde está en el trabajo</h2>
   <table>
     <tr><th>Requerimiento</th><th>Dónde se cumple</th></tr>
@@ -237,7 +242,7 @@ def construir():
   </table>"""))
 
     # 5 ── Por qué no es calculable
-    L.append(lamina(5, T, "Decisión de diseño · la central", "Gabriel Araya", """
+    L.append(lamina(next(num_lamina), T, "Decisión de diseño · la central", "Gabriel Araya", """
   <h2>Por qué no se puede resolver<br>con las fórmulas del ramo</h2>
   <ul>
     <li><strong>Ningún servicio es exponencial.</strong> Una lognormal y dos Erlang. Las
@@ -252,8 +257,34 @@ def construir():
   <p class="grande" style="margin-top:2.5vh">Cada una basta por sí sola. Calculamos igual
      ρ = λ/(s·μ), pero <strong>solo como referencia</strong>.</p>"""))
 
+    # ── Los parámetros con la notación del ramo ────────────────────────────
+    filas_par = "".join(
+        f"<tr{' class=\"destacada\"' if f['rho'] >= 0.85 else ''}>"
+        f"<td>{f['estacion']}</td><td>{num(f['lambda_hora'])}</td>"
+        f"<td>{num(f['mu_hora'])}</td><td>{f['s']}</td>"
+        f"<td>{num(f['capacidad_hora'])}</td><td>{num(f['rho'], 2)}</td>"
+        f"<td>{num(f['rho_pico'], 2)}</td></tr>"
+        for f in p.tabla_parametros())
+    L.append(lamina(next(num_lamina), T, "Parámetros de entrada", "Gabriel Araya", f"""
+  <h2>Los parámetros, en la notación del ramo</h2>
+  <table>
+    <tr><th>Estación</th><th><span class="tal-cual">λ</span> (ped/h)</th>
+        <th><span class="tal-cual">μ</span> (ped/h)</th><th>s</th>
+        <th><span class="tal-cual">s·μ</span></th>
+        <th><span class="tal-cual">ρ</span> medio</th>
+        <th><span class="tal-cual">ρ</span> cresta</th></tr>
+    {filas_par}
+  </table>
+  <p class="grande" style="margin-top:2.5vh">
+     <strong>T = {num(p.T_horizonte_horas(), 0)} horas</strong> de jornada ·
+     λ es la misma en las tres porque la red es en serie y sin pérdidas:
+     todo lo que entra a picking termina pasando por control.</p>
+  <p class="grande">En la cresta el control da <strong>ρ = {num(p.utilizacion_teorica(p.CONTROL, p.LAMBDA_PICO_HORA), 2)}</strong>:
+     la fórmula anuncia que la cola crece sin límite. Cuánto crece en dos horas
+     lo responde la simulación, no la fórmula.</p>"""))
+
     # 6 ── Justificación de los servicios
-    L.append(lamina(6, T, "Justificación de los supuestos", "Gabriel Araya", f"""
+    L.append(lamina(next(num_lamina), T, "Justificación de los supuestos", "Gabriel Araya", f"""
   <h2>De dónde sale cada distribución</h2>
   <ul>
     <li><strong>Picking — lognormal, {num(p.PICKING.media_min)} min.</strong> Lo domina el
@@ -271,7 +302,7 @@ def construir():
      habría dado tiempos de 97 minutos en vez de {num(p.PICKING.media_min)}.</p>"""))
 
     # 7 ── Perfil de llegadas
-    L.append(lamina(7, T, "Justificación de los supuestos", "Gabriel Araya", f"""
+    L.append(lamina(next(num_lamina), T, "Justificación de los supuestos", "Gabriel Araya", f"""
   <h2>La demanda tiene forma</h2>
   <div class="figura"><img src="graficos/g1-perfil-llegadas.png" alt="Perfil horario"></div>
   <p class="grande">Media de {num(p.LAMBDA_PROMEDIO_HORA, 0)} pedidos/hora, cresta de
@@ -279,7 +310,7 @@ def construir():
      <strong>en la cresta</strong>, no en el promedio.</p>"""))
 
     # 8 ── Economía
-    L.append(lamina(8, T, "Justificación de los cálculos", "Bianca Torres", f"""
+    L.append(lamina(next(num_lamina), T, "Justificación de los cálculos", "Bianca Torres", f"""
   <h2>El negocio tiene que cerrar</h2>
   <table>
     <tr><th>Concepto</th><th>Al mes</th></tr>
@@ -300,7 +331,7 @@ def construir():
   </div>"""))
 
     # 9 ── Resultados base
-    L.append(lamina(9, T, "Resultados · modelo base", "Bianca Torres", f"""
+    L.append(lamina(next(num_lamina), T, "Resultados · modelo base", "Bianca Torres", f"""
   <h2>Los indicadores del día típico</h2>
   <table>
     <tr><th>Estación</th><th><span class="tal-cual">W<sub>q</sub></span></th><th>W</th><th><span class="tal-cual">L<sub>q</sub></span></th>
@@ -322,7 +353,7 @@ def construir():
      <strong>{num(r['tiempo_total_p95'])} min</strong> en el p(95).</p>"""))
 
     # 10 ── Pruebas de carga
-    L.append(lamina(10, T, "Pruebas de carga · límites máximos", "Matías Torres", f"""
+    L.append(lamina(next(num_lamina), T, "Pruebas de carga · límites máximos", "Matías Torres", f"""
   <h2>Hasta dónde aguanta</h2>
   <div class="figura"><img src="graficos/g2-degradacion.png" alt="Degradación"></div>
   <p class="grande">Límite de servicio <strong>{num(lim_servicio, 0)} pedidos/día</strong>;
@@ -330,19 +361,19 @@ def construir():
      real: se deja de cumplir mucho antes de dejar de poder.</p>"""))
 
     # 11 ── Dónde está el cuello
-    L.append(lamina(11, T, "Análisis", "Matías Torres", """
+    L.append(lamina(next(num_lamina), T, "Análisis", "Matías Torres", """
   <h2>El cuello, y el síntoma que engaña</h2>
   <div class="figura"><img src="graficos/g3-utilizacion.png" alt="Utilización y bloqueo"></div>
   <p class="grande">El control satura primero. El bloqueo del empaque <strong>no es el
      problema</strong>: es el cuello del control propagándose hacia atrás.</p>"""))
 
     # 12 ── Intervenciones
-    L.append(lamina(12, T, "Mejoras simuladas", "Lucas Mora", """
+    L.append(lamina(next(num_lamina), T, "Mejoras simuladas", "Lucas Mora", """
   <h2>Cinco intervenciones, mismas semillas</h2>
   <div class="figura"><img src="graficos/g4-escenarios.png" alt="Escenarios"></div>"""))
 
     # 13 ── Lo que no sirvió
-    L.append(lamina(13, T, "Mejoras simuladas", "Lucas Mora", f"""
+    L.append(lamina(next(num_lamina), T, "Mejoras simuladas", "Lucas Mora", f"""
   <h2>Lo que no funcionó,<br>y por qué importa</h2>
   <ul>
     <li class="no"><strong>Agrandar la mesa de despacho.</strong> El bloqueo cae de
@@ -359,15 +390,37 @@ def construir():
      Lo supimos porque lo simulamos, no porque lo supusiéramos.</p>"""))
 
     # 14 ── Punto de equilibrio
-    L.append(lamina(14, T, "La propuesta", "Lucas Mora", f"""
+    L.append(lamina(next(num_lamina), T, "La propuesta", "Lucas Mora", f"""
   <h2>Reforzar el control<br>solo en la cresta</h2>
   <div class="figura"><img src="graficos/g5-equilibrio.png" alt="Punto de equilibrio"></div>
   <p class="grande">Cumplimiento {num(base['sla'])} % → <strong>{num(mejora['sla'])} %</strong>,
      bloqueo a cero, por {eco.pesos(d_costo)} al mes. Se paga sola si un despacho tardío
      cuesta más de <strong>{eco.pesos(equilibrio)}</strong>.</p>"""))
 
+    # ── E-04: el límite, después de la mejora ──────────────────────────────
+    extra = e4["limite_despues"] - e4["limite_antes"]
+    margen_extra = (extra * p.DIAS_HABILES_MES
+                    * (p.MARGEN_LOGISTICO_POR_PEDIDO - p.INSUMOS_POR_PEDIDO))
+    L.append(lamina(next(num_lamina), T, "Simulación con los nuevos resultados",
+                    "Matías Torres", f"""
+  <h2>La mejora no solo reduce atrasos:<br>habilita crecer</h2>
+  <p class="grande">Se repitió el barrido completo de carga con la configuración propuesta.</p>
+  <div class="cifras">
+    <div class="cifra"><div class="valor">{num(e4['limite_antes'], 0)}</div>
+      <div class="rotulo">pedidos/día con 95 % de cumplimiento, antes</div></div>
+    <div class="cifra"><div class="valor">{num(e4['limite_despues'], 0)}</div>
+      <div class="rotulo">después de la mejora</div></div>
+    <div class="cifra"><div class="valor">+{num(100 * extra / e4['limite_antes'], 0)} %</div>
+      <div class="rotulo">de capacidad de servicio</div></div>
+  </div>
+  <p class="grande" style="margin-top:3vh">Esos {num(extra, 0)} pedidos diarios adicionales
+     aportan <strong>{eco.pesos(margen_extra)}</strong> de margen al mes, contra
+     {eco.pesos(d_costo)} de costo.</p>
+  <p class="cita" style="margin-top:2vh">El retorno viene del crecimiento que habilita, no
+     del ahorro en atrasos. Por eso este argumento no depende del supuesto débil.</p>"""))
+
     # 15 ── Cierre
-    L.append(lamina(15, T, "Conclusiones", "Los cinco integrantes", f"""
+    L.append(lamina(next(num_lamina), T, "Conclusiones", "Los cinco integrantes", f"""
   <h2>Lo que nos deja el modelo</h2>
   <ul>
     <li><strong>El cuello no era el que se veía.</strong> El bloqueo del empaque era el

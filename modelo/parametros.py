@@ -205,3 +205,42 @@ def utilizacion_teorica(estacion: Estacion, lambda_hora: float,
     simulación sí captura.
     """
     return lambda_hora / capacidad_estacion_por_hora(estacion, servidores)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Los parámetros con la notación del ramo
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# El enunciado pide «definir los parámetros de entrada a la simulación de
+# acuerdo a la realidad del problema: λ, μ, T, s». Esta función los expone con
+# esos nombres, para que la correspondencia entre el modelo y la teoría quede
+# explícita y no haya que deducirla del código.
+
+def tabla_parametros() -> list[dict]:
+    """
+    λ, μ, s y ρ por estación, en pedidos por hora.
+
+    En una red en serie sin pérdidas, la tasa de llegada a cada estación es la
+    misma: todo lo que entra a picking termina pasando por control. Por eso λ
+    es igual en las tres.
+    """
+    filas = []
+    for e in ESTACIONES:
+        mu = 60.0 / e.media_min              # servicio de UN servidor, por hora
+        filas.append({
+            "estacion": e.nombre,
+            "lambda_hora": LAMBDA_PROMEDIO_HORA,
+            "lambda_pico_hora": float(LAMBDA_PICO_HORA),
+            "mu_hora": mu,
+            "s": e.servidores,
+            "capacidad_hora": e.servidores * mu,
+            "rho": utilizacion_teorica(e, LAMBDA_PROMEDIO_HORA),
+            "rho_pico": utilizacion_teorica(e, LAMBDA_PICO_HORA),
+            "familia": e.familia,
+        })
+    return filas
+
+
+def T_horizonte_horas() -> float:
+    """T — el intervalo de observación: una jornada de bodega."""
+    return JORNADA_MIN / 60

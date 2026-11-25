@@ -1,0 +1,80 @@
+{
+ "umbral_sla": 95.0,
+ "replicas": 20,
+ "limite_antes": 241.8,
+ "limite_despues": 302.05,
+ "puntos": [
+  {
+   "factor": 0.8,
+   "pedidos_dia": 241.8,
+   "sla": 97.24444287839417,
+   "tiempo_medio": 12.487893700653638,
+   "bloqueo_empaque": 0.0,
+   "rho_control": 0.7119511178073632
+  },
+  {
+   "factor": 0.9,
+   "pedidos_dia": 271.5,
+   "sla": 96.2840359211987,
+   "tiempo_medio": 14.173799550397106,
+   "bloqueo_empaque": 0.0,
+   "rho_control": 0.7900086790324883
+  },
+  {
+   "factor": 1.0,
+   "pedidos_dia": 302.05,
+   "sla": 95.4222869277008,
+   "tiempo_medio": 16.234639284472067,
+   "bloqueo_empaque": 0.0,
+   "rho_control": 0.8648826852295967
+  },
+  {
+   "factor": 1.1,
+   "pedidos_dia": 332.2,
+   "sla": 93.62289333540966,
+   "tiempo_medio": 20.56702961962341,
+   "bloqueo_empaque": 0.0,
+   "rho_control": 0.9304726023402166
+  },
+  {
+   "factor": 1.2,
+   "pedidos_dia": 362.15,
+   "sla": 91.47727784584998,
+   "tiempo_medio": 27.16222200351322,
+   "bloqueo_empaque": 0.9166159381339858,
+   "rho_control": 0.9906760866001648
+  },
+  {
+   "factor": 1.3,
+   "pedidos_dia": 392.3,
+   "sla": 87.70921911526457,
+   "tiempo_medio": 39.20225056143009,
+   "bloqueo_empaque": 1.4980719788057546,
+   "rho_control": 1.0268855287308227
+  },
+  {
+   "factor": 1.4,
+   "pedidos_dia": 423.2,
+   "sla": 82.57723955981848,
+   "tiempo_medio": 58.35021590346178,
+   "bloqueo_empaque": 1.7969112185296157,
+   "rho_control": 1.0352543058147068
+  },
+  {
+   "factor": 1.5,
+   "pedidos_dia": 452.7,
+   "sla": 78.4941596000705,
+   "tiempo_medio": 76.28028686108928,
+   "bloqueo_empaque": 2.7284292422406287,
+   "rho_control": 1.0465096147174449
+  },
+  {
+   "factor": 1.6,
+   "pedidos_dia": 482.2,
+   "sla": 73.86384246003969,
+   "tiempo_medio": 100.62102655839074,
+   "bloqueo_empaque": 5.509485112362545,
+   "rho_control": 1.0461155318757391
+  }
+ ]
+}

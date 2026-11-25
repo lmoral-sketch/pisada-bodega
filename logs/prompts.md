@@ -87,3 +87,18 @@ no aprobadas**.
     presentación sigue el orden en que el enunciado enumera los requisitos, no una
     ponderación.
 - **Propuestas no aprobadas:** ninguna.
+
+## 2026-11-25 | agente: Claude Code (claude-opus-5)
+
+- **Prompt:** «dame las preguntas que puede hacer el profesor con sus respuestas» + «revísalo nuevamente todo desde inicio a fin, ve si cumple con todo lo necesario para la entrega».
+- **Cambios:**
+  - `docs/defensa.md`: 18 preguntas probables con su respuesta, todas con las cifras reales del trabajo y la ruta del archivo donde verificarlas.
+  - **Auditoría contra el enunciado, que encontró dos brechas y las cerró:**
+    1. El enunciado pide *«simular con los nuevos resultados y presentar conclusiones»*. E-03 comparaba las mejoras a volumen fijo, pero **no se había repetido el barrido de carga con la mejora aplicada**. Se agregó `e04_limite_mejorado.py`: el límite de servicio pasa de 242 a 302 pedidos/día, un 25 % más, que aporta $8.772.400 de margen mensual contra $942.153 de costo.
+    2. Un objetivo específico nombra los parámetros como *«λ, μ, T, s»* y el trabajo los tenía implícitos. Se agregó `tabla_parametros()` y `T_horizonte_horas()` a `modelo/parametros.py`, más una lámina con esa notación.
+  - La numeración de las láminas pasó a ser automática, para no renumerar a mano al insertar.
+  - Corregida la alineación de los encabezados numéricos de las tablas.
+- **Defectos conocidos:**
+  - E-04 habilita el argumento económico más fuerte del trabajo y **llegó al final**: si se hubiera corrido antes, E-03 se habría planteado de otra forma. Queda como está porque el recorrido —primero el supuesto débil, después el argumento que no depende de él— es honesto y vale como relato.
+  - La rúbrica sigue sin estar disponible.
+- **Propuestas no aprobadas:** ninguna.

@@ -108,6 +108,12 @@ la mesa de despacho:
 | Bloqueo en empaque | 9,8 % | **0,0 %** |
 | Costo operativo | $12.986.667 | $13.907.500 |
 
+Y hay un segundo efecto, que es el argumento más fuerte: al repetir el barrido de carga con
+la mejora aplicada, **el límite de servicio pasa de 242 a 302 pedidos/día, un 25 % más**. Esos
+60 pedidos diarios adicionales aportan **$8.772.400** de margen al mes contra **$942.153** de
+costo. El retorno viene del crecimiento que habilita, no del ahorro en atrasos, así que no
+depende del supuesto de cuánto cuesta un despacho tardío.
+
 Cuesta **$920.833 al mes** y evita **176 despachos tardíos**. Se financia sola si un despacho
 tardío le cuesta a la empresa más de **$5.241**. Contratar a la misma persona la jornada
 completa logra casi lo mismo y necesita que el atraso cueste $7.062: la ventaja del turno
@@ -136,6 +142,9 @@ Los tres experimentos, en orden:
 | `experimentos/e01_base.py` | ¿Cómo se comporta la bodega hoy y dónde está el cuello? |
 | `experimentos/e02_carga.py` | ¿Hasta dónde aguanta? |
 | `experimentos/e03_mejoras.py` | ¿Qué mejora conviene, y desde qué costo se paga sola? |
+| `experimentos/e04_limite_mejorado.py` | ¿Hasta dónde aguanta **después** de la mejora? |
+| `experimentos/g00_graficos.py` | Genera los gráficos de la presentación |
+| `experimentos/g01_presentacion.py` | Genera `docs/presentacion.html` desde los resultados |
 
 Los resultados quedan en `resultados/` en formato JSON.
 
@@ -150,7 +159,10 @@ bodega/
 │   └── economia.py     Costos, utilidad y punto de equilibrio
 ├── experimentos/       Los tres experimentos
 ├── resultados/         Salidas en JSON
-├── docs/               Modelo, decisiones y presentación
+├── docs/
+│   ├── presentacion.html   17 láminas, generadas desde los resultados
+│   ├── defensa.md          Preguntas probables del profesor y cómo responderlas
+│   └── graficos/           Los cinco gráficos
 └── logs/prompts.md     Registro de prompts exigido por el enunciado
 ```
 

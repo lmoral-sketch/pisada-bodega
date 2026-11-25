@@ -62,6 +62,7 @@
   table { width:100%; border-collapse:collapse; font-size:1.35vw; }
   th { text-align:left; font-size:1vw; text-transform:uppercase; letter-spacing:.08em; }
   th .tal-cual { text-transform:none; font-size:1.15vw; }
+  th:not(:first-child) { text-align:right; }
   th:not(.x) { font-size:1vw; letter-spacing:.08em;
        color:var(--celeste-ing); padding-bottom:1.1vh; border-bottom:2px solid var(--celeste-ing); }
   td { padding:1.1vh 0; border-bottom:1px solid #e6e6e6; }
@@ -99,7 +100,7 @@
      conviene pagar.</p>
   <div class="integrantes"><strong>Integrantes:</strong> Catalina Emilia Araniz Arancibia · Gabriel Ignacio Araya López · Bianca Paola Torres Rivadeneira · Lucas Ángel Mora Loiza · Matías Torres Estay<br>
     Profesor: Javier Aranda · Noviembre de 2026</div>
-  <div class="numero">01 / 15</div>
+  <div class="numero">01 / 17</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
 </section>
 <section class="lamina ">
@@ -119,7 +120,7 @@
   </div>
   <p class="grande" style="margin-top:3vh">La pregunta no es si contratar a alguien, sino
      <strong>dónde</strong> y <strong>cuándo</strong>.</p>
-  <div class="numero">02 / 15</div>
+  <div class="numero">02 / 17</div>
   <div class="quien">Catalina Araniz</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -148,7 +149,7 @@
     <li>Las llegadas siguen el <strong>perfil horario</strong> real del comercio: dos crestas,
         no una tasa constante.</li>
   </ul>
-  <div class="numero">03 / 15</div>
+  <div class="numero">03 / 17</div>
   <div class="quien">Catalina Araniz</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -168,7 +169,7 @@
     <tr><td>Analizar y proponer mejoras</td><td>E-03: 5 intervenciones</td></tr>
     <tr class="destacada"><td>Simular las mejoras y concluir</td><td>E-03, con punto de equilibrio</td></tr>
   </table>
-  <div class="numero">04 / 15</div>
+  <div class="numero">04 / 17</div>
   <div class="quien">Catalina Araniz</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -189,7 +190,31 @@
   </ul>
   <p class="grande" style="margin-top:2.5vh">Cada una basta por sí sola. Calculamos igual
      ρ = λ/(s·μ), pero <strong>solo como referencia</strong>.</p>
-  <div class="numero">05 / 15</div>
+  <div class="numero">05 / 17</div>
+  <div class="quien">Gabriel Araya</div>
+  <div class="marca">Bodega Pisada · INFB8091</div>
+  <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
+</section>
+<section class="lamina ">
+  <div class="etiqueta">Parámetros de entrada</div>
+  
+  <h2>Los parámetros, en la notación del ramo</h2>
+  <table>
+    <tr><th>Estación</th><th><span class="tal-cual">λ</span> (ped/h)</th>
+        <th><span class="tal-cual">μ</span> (ped/h)</th><th>s</th>
+        <th><span class="tal-cual">s·μ</span></th>
+        <th><span class="tal-cual">ρ</span> medio</th>
+        <th><span class="tal-cual">ρ</span> cresta</th></tr>
+    <tr><td>Picking</td><td>30,0</td><td>13,3</td><td>3</td><td>40,0</td><td>0,75</td><td>0,95</td></tr><tr><td>Empaque</td><td>30,0</td><td>18,8</td><td>2</td><td>37,5</td><td>0,80</td><td>1,01</td></tr><tr class="destacada"><td>Control y etiquetado</td><td>30,0</td><td>33,3</td><td>1</td><td>33,3</td><td>0,90</td><td>1,14</td></tr>
+  </table>
+  <p class="grande" style="margin-top:2.5vh">
+     <strong>T = 10 horas</strong> de jornada ·
+     λ es la misma en las tres porque la red es en serie y sin pérdidas:
+     todo lo que entra a picking termina pasando por control.</p>
+  <p class="grande">En la cresta el control da <strong>ρ = 1,14</strong>:
+     la fórmula anuncia que la cola crece sin límite. Cuánto crece en dos horas
+     lo responde la simulación, no la fórmula.</p>
+  <div class="numero">06 / 17</div>
   <div class="quien">Gabriel Araya</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -212,7 +237,7 @@
   <p class="grande" style="margin-top:2vh">Detalle: <code>ciw.dists.Lognormal</code> recibe
      los parámetros de la <strong>normal subyacente</strong>. Pasarle la media observada
      habría dado tiempos de 97 minutos en vez de 4,5.</p>
-  <div class="numero">06 / 15</div>
+  <div class="numero">07 / 17</div>
   <div class="quien">Gabriel Araya</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -225,7 +250,7 @@
   <p class="grande">Media de 30 pedidos/hora, cresta de
      38. Usar el promedio habría escondido el problema: el sistema falla
      <strong>en la cresta</strong>, no en el promedio.</p>
-  <div class="numero">07 / 15</div>
+  <div class="numero">08 / 17</div>
   <div class="quien">Gabriel Araya</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -251,7 +276,7 @@
     <div class="cifra"><div class="valor">68</div>
       <div class="rotulo">pedidos diarios de equilibrio</div></div>
   </div>
-  <div class="numero">08 / 15</div>
+  <div class="numero">09 / 17</div>
   <div class="quien">Bianca Torres</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -278,7 +303,7 @@
      en pedidos · 30 réplicas.<br>
      El pedido completo demora <strong>20,0 min</strong> de media y
      <strong>38,6 min</strong> en el p(95).</p>
-  <div class="numero">09 / 15</div>
+  <div class="numero">10 / 17</div>
   <div class="quien">Bianca Torres</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -291,7 +316,7 @@
   <p class="grande">Límite de servicio <strong>242 pedidos/día</strong>;
      la bodega sigue <em>procesando</em> hasta 482. Esa distancia es el margen
      real: se deja de cumplir mucho antes de dejar de poder.</p>
-  <div class="numero">10 / 15</div>
+  <div class="numero">11 / 17</div>
   <div class="quien">Matías Torres</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -303,7 +328,7 @@
   <div class="figura"><img src="graficos/g3-utilizacion.png" alt="Utilización y bloqueo"></div>
   <p class="grande">El control satura primero. El bloqueo del empaque <strong>no es el
      problema</strong>: es el cuello del control propagándose hacia atrás.</p>
-  <div class="numero">11 / 15</div>
+  <div class="numero">12 / 17</div>
   <div class="quien">Matías Torres</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -313,7 +338,7 @@
   
   <h2>Cinco intervenciones, mismas semillas</h2>
   <div class="figura"><img src="graficos/g4-escenarios.png" alt="Escenarios"></div>
-  <div class="numero">12 / 15</div>
+  <div class="numero">13 / 17</div>
   <div class="quien">Lucas Mora</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -335,7 +360,7 @@
   </ul>
   <p class="cita" style="margin-top:3vh">Atacar el síntoma visible no mejora el sistema.
      Lo supimos porque lo simulamos, no porque lo supusiéramos.</p>
-  <div class="numero">13 / 15</div>
+  <div class="numero">14 / 17</div>
   <div class="quien">Lucas Mora</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
@@ -348,8 +373,31 @@
   <p class="grande">Cumplimiento 92,9 % → <strong>95,1 %</strong>,
      bloqueo a cero, por $920.833 al mes. Se paga sola si un despacho tardío
      cuesta más de <strong>$5.241</strong>.</p>
-  <div class="numero">14 / 15</div>
+  <div class="numero">15 / 17</div>
   <div class="quien">Lucas Mora</div>
+  <div class="marca">Bodega Pisada · INFB8091</div>
+  <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
+</section>
+<section class="lamina ">
+  <div class="etiqueta">Simulación con los nuevos resultados</div>
+  
+  <h2>La mejora no solo reduce atrasos:<br>habilita crecer</h2>
+  <p class="grande">Se repitió el barrido completo de carga con la configuración propuesta.</p>
+  <div class="cifras">
+    <div class="cifra"><div class="valor">242</div>
+      <div class="rotulo">pedidos/día con 95 % de cumplimiento, antes</div></div>
+    <div class="cifra"><div class="valor">302</div>
+      <div class="rotulo">después de la mejora</div></div>
+    <div class="cifra"><div class="valor">+25 %</div>
+      <div class="rotulo">de capacidad de servicio</div></div>
+  </div>
+  <p class="grande" style="margin-top:3vh">Esos 60 pedidos diarios adicionales
+     aportan <strong>$8.772.400</strong> de margen al mes, contra
+     $920.833 de costo.</p>
+  <p class="cita" style="margin-top:2vh">El retorno viene del crecimiento que habilita, no
+     del ahorro en atrasos. Por eso este argumento no depende del supuesto débil.</p>
+  <div class="numero">16 / 17</div>
+  <div class="quien">Matías Torres</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
 </section>
@@ -371,7 +419,7 @@
   <p class="cita" style="margin-top:3vh">Las fórmulas del ramo dijeron que el control
      superaba ρ = 1 en la cresta. La simulación dijo cuánto cuesta eso en pesos, y qué
      hacer al respecto.</p>
-  <div class="numero">15 / 15</div>
+  <div class="numero">17 / 17</div>
   <div class="quien">Los cinco integrantes</div>
   <div class="marca">Bodega Pisada · INFB8091</div>
   <img class="escudo" src="assets/logo-utem-escudo.png" alt="UTEM">
